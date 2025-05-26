@@ -4,6 +4,8 @@ height = 600
 
 [constants]
 fps = 60
+gravity = 0.5
+jump_strength = -15
 
 [color]
 white = "(255,255,255)"
