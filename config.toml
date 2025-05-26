@@ -1,0 +1,11 @@
+[screen]
+width = 400
+height = 600
+
+[constants]
+fps = 60
+
+[color]
+white = "(255,255,255)"
+green = "(0,200,0)"
+blue = "(0,0,255)"
