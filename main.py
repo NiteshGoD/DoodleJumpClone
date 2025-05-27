@@ -1,7 +1,12 @@
 """Main Game entry file"""
 import random
 import pygame
-from configuration import WIDTH, HEIGHT, GREEN, WHITE, FPS, JUMP_STRENGTH
+from check_python_version import is_python_version_greater_than_3_11
+#from configuration import WIDTH, HEIGHT, GREEN, WHITE, FPS, JUMP_STRENGTH
+if is_python_version_greater_than_3_11():
+    from configuration import WIDTH, HEIGHT, GREEN, WHITE, FPS, JUMP_STRENGTH
+else:
+    from using_config_parser import WIDTH, HEIGHT, GREEN, WHITE, FPS, JUMP_STRENGTH
 from player import Player
 from platforms import Platform
 
