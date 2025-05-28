@@ -1,7 +1,13 @@
 """Player Definition"""
 import pygame
-from configuration import BLUE, WIDTH, HEIGHT, GRAVITY
-
+# from configuration import BLUE, WIDTH, HEIGHT, GRAVITY
+# from using_config_parser import BLUE, WIDTH, HEIGHT, GRAVITY
+from check_python_version import is_python_version_greater_than_3_11
+#from configuration import WIDTH, HEIGHT, GREEN, WHITE, FPS, JUMP_STRENGTH
+if is_python_version_greater_than_3_11():
+    from configuration import WIDTH, HEIGHT,BLUE, GRAVITY
+else:
+    from using_config_parser import WIDTH, HEIGHT, BLUE, GRAVITY
 
 class Player(pygame.sprite.Sprite):
     """Player Blueprint"""
