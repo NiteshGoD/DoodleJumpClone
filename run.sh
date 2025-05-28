@@ -14,7 +14,7 @@ fi
 VENV_DIR="g_env"
 CURRENT_WORKING_DIRECTORY=$(pwd)
 #create virtualenv if it doesn't exist
-if [ ! -d "$CURRENT_WORKING_DIRECTORY/$VENV_DIR"]; then
+if [ ! -d "$CURRENT_WORKING_DIRECTORY/$VENV_DIR" ]; then
     echo "Creating virtual environment..."
     python3 -m venv $VENV_DIR
 fi
