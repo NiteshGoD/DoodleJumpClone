@@ -10,6 +10,8 @@
 chmod u+x run.sh
 ```
 - Run the script **run.sh**
+### For Windows Operating System
+- Run the script **run.bat**
 ## 2. Manual Project Setup
 1. Clone the repo to your local drive
 2. Create a python virtual environment using  the command 
