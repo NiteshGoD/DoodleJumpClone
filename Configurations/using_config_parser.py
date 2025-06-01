@@ -15,6 +15,9 @@ WIDTH, HEIGHT = ast.literal_eval(config["screen"]["width"].strip(
 WHITE = eval(ast.literal_eval(config["color"]["white"].strip()))
 GREEN = eval(ast.literal_eval(config["color"]["green"].strip()))
 BLUE = eval(ast.literal_eval(config["color"]["blue"].strip()))
+SKY_BLUE = eval(ast.literal_eval(config["color"]["sky_blue"]))
+DARK_GRAY = eval(ast.literal_eval(config["color"]["dark_gray"]))
+GRAY = eval(ast.literal_eval(config["color"]["gray"]))
 
 FPS = ast.literal_eval(config["constants"]["fps"].strip())
 GRAVITY = ast.literal_eval(config["constants"]["gravity"].strip())
