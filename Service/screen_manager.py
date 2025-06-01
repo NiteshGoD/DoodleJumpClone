@@ -43,6 +43,8 @@ class ScreenManager():
             self.set_state("pause")
         elif event.key == 27 and self.current_state == "about":
             self.set_state("menu")
+        elif event.key == 27 and self.current_state == "restart":
+            self.set_state("pause")
         self.current_screen.on_event(event)
 
     def __set_current_screen(self):
