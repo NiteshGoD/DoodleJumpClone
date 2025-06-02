@@ -17,7 +17,7 @@ class Screen():
         self.main_screen = main_screen
         self.text = None
         self.heading_font = get_game_font(size=22)
-        self.description_font = get_game_font(size=18)
+        self.description_font = get_game_font(size=12)
         self.buttons = []
 
     def on_event(self, event):
@@ -38,6 +38,7 @@ class AboutScreen(Screen):
     def __init__(self, main_screen: pygame.surface.Surface):
         super().__init__(main_screen)
         self.buttons = []
+        self.msg = "WIP, Press Esc to go back"
 
     def on_event(self, event):
         return super().on_event(event)
@@ -50,7 +51,7 @@ class AboutScreen(Screen):
         text_rect = text_surf.get_rect()
         text_rect.center = (WIDTH//2, HEIGHT//6)
         text_2 = self.description_font.render(
-            "Work in progress", True, (0, 0, 0), GRAY)
+            f"{self.msg}", True, (0, 0, 0), GRAY)
         text_2_rect = text_2.get_rect()
         text_2_rect.center = (WIDTH//2 - 6, HEIGHT//3)
         text_3 = self.description_font.render(
@@ -111,6 +112,7 @@ class GameScreen(Screen):
         self.game_play = GamePlay(
             self.player, self.platforms, self.all_sprites, self.callback)
         self.game_play.game_start_setup()
+        
         # self.right_after_game_start()
 
     def on_event(self, event):
@@ -127,8 +129,9 @@ class GameScreen(Screen):
                 self.player.has_player_fallen_off = False
         self.main_screen.fill(SKY_BLUE)
         text_surf = render_text_drop_shadow(
-            self.heading_font, "GAME WINDOW", (0, 0, 0), -5, 3)
+            self.heading_font, f"Score: {self.game_play.distance_travelled}", (0, 0, 0), -5, 3)
         text_rect = text_surf.get_rect()
+        # score_rect = self.score.get_rect()
         text_rect.center = (WIDTH//2, HEIGHT//6)
         self.main_screen.blit(text_surf, text_rect)
         self.all_sprites.draw(self.main_screen)
@@ -146,10 +149,10 @@ class GameOverScreen(Screen):
         if event.key == 27:
             if self.callback:
                 # TODO go back to main menu
-                self.callback("menu")
+                # self.callback("menu")
                 # pylint: disable=no-member
-                # pygame.quit()
-                # sys.exit()
+                pygame.quit()
+                sys.exit()
 
     @staticmethod
     def exit_game():

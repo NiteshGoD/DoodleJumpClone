@@ -18,6 +18,7 @@ BLUE = eval(ast.literal_eval(config["color"]["blue"].strip()))
 SKY_BLUE = eval(ast.literal_eval(config["color"]["sky_blue"]))
 DARK_GRAY = eval(ast.literal_eval(config["color"]["dark_gray"]))
 GRAY = eval(ast.literal_eval(config["color"]["gray"]))
+DARK_PURPLE = eval(ast.literal_eval(config["color"]["dark_purple"]))
 
 FPS = ast.literal_eval(config["constants"]["fps"].strip())
 GRAVITY = ast.literal_eval(config["constants"]["gravity"].strip())
