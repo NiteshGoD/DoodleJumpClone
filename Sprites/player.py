@@ -8,8 +8,9 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((30, 30))
-        self.image.fill(BLUE)
+        # self.image = pygame.Surface((32, 32))
+        self.image = pygame.image.load("assests/images/player/player.png").convert_alpha()
+        # self.image.fill(BLUE)
         self.rect = self.image.get_rect()
         self.rect.center = (WIDTH // 2, HEIGHT - 200)
         self.vel_y = 0

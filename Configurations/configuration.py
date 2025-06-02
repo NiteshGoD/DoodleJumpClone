@@ -14,6 +14,7 @@ BLUE = ast.literal_eval(DATA["color"]["blue"])
 SKY_BLUE = ast.literal_eval(DATA["color"]["sky_blue"])
 DARK_GRAY = ast.literal_eval(DATA["color"]["dark_gray"])
 GRAY = ast.literal_eval(DATA["color"]["gray"])
+DARK_PURPLE = ast.literal_eval(DATA["color"]["dark_purple"])
 
 FPS = DATA["constants"]["fps"]
 GRAVITY = DATA["constants"]["gravity"]
