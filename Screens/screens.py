@@ -134,7 +134,10 @@ class GameScreen(Screen):
         # score_rect = self.score.get_rect()
         text_rect.center = (WIDTH//2, HEIGHT//6)
         self.main_screen.blit(text_surf, text_rect)
+        self.all_sprites.remove(self.player)
         self.all_sprites.draw(self.main_screen)
+        self.player.draw(self.main_screen, 20)
+        #pygame.draw.rect(self.main_screen,(255,0,0),self.player.rect,2)
         pygame.display.flip()
 
 
