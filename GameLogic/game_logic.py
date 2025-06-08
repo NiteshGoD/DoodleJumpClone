@@ -70,23 +70,23 @@ class GamePlay():
                     self.all_sprites.add(new_scale)
                     self.ruler.add(new_scale)
             #shifting enemy too
-            if self.enemy:
-                enemy_player_collision = pygame.sprite.spritecollide(self.player, self.enemies, False)
-                if enemy_player_collision:
-                    print("Player touched the enemy")
-                    self.player.has_player_fallen_off = True
-                self.enemy.rect.y += abs(self.player.vel_y)
-                if self.enemy.rect.bottom > HEIGHT:
-                    self.enemy.kill()
-                    print("Enemy killed because out of screen")
-                    self.enemies.remove(self.enemy)
-                    # self.enemy=None
-                target_hit = pygame.sprite.spritecollide(self.enemy, self.bullets, False)
-                if target_hit:
-                    self.enemy.kill()
-                    # self.enemy = None
-                    print("Enemy killed")
-                    self.enemies.remove(self.enemy)
+        if self.enemy:
+            enemy_player_collision = pygame.sprite.spritecollide(self.player, self.enemies, False)
+            if enemy_player_collision:
+                print("Player touched the enemy")
+                self.player.has_player_fallen_off = True
+            self.enemy.rect.y += abs(self.player.vel_y)
+            if self.enemy.rect.bottom > HEIGHT:
+                self.enemy.kill()
+                print("Enemy killed because out of screen")
+                self.enemies.remove(self.enemy)
+                # self.enemy=None
+            target_hit = pygame.sprite.spritecollide(self.enemy, self.bullets, False)
+            if target_hit:
+                self.enemy.kill()
+                # self.enemy = None
+                print("Enemy killed")
+                self.enemies.remove(self.enemy)
             # if self.distance_travelled > 200 and self.distance_travelled %  == 0:
             #             self.spawn_enemy()
             for bullet in self.bullets:
