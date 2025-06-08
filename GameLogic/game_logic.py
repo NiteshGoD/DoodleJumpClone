@@ -48,6 +48,7 @@ class GamePlay():
                     self.all_sprites.add(new_scale)
                     self.ruler.add(new_scale)
         self.all_sprites.update()
+        self.player.update()
 
     def scale_on_the_right(self):
         # scale = Ruler(WIDTH-20,HEIGHT)
