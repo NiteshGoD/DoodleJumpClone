@@ -1,7 +1,7 @@
 """Main Game Entry point"""
 import pygame
 from Configurations import WIDTH, HEIGHT, FPS
-from Service import ScreenManager
+from Service import ScreenManager, MusicPlayer
 
 
 class DoodleJumpGame():
@@ -15,7 +15,9 @@ class DoodleJumpGame():
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("TESTING SCREEN")
         self.clock = pygame.time.Clock()
-        self.screen_manager = ScreenManager(self.screen)
+        self.music_player = MusicPlayer()
+        # self.music_player.load_music("Music/perplextion.mp3")
+        self.screen_manager = ScreenManager(self.screen, self.music_player)
 
     def on_event(self, event):
         """checks the events here"""

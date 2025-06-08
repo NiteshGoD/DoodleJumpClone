@@ -8,6 +8,7 @@ from Utilities import render_text_drop_shadow
 from Components import Button
 from Sprites import Player
 from GameLogic import GamePlay
+# from Service import MusicPlayer
 
 
 class Screen():
@@ -67,13 +68,20 @@ class AboutScreen(Screen):
 class MenuScreen(Screen):
     """Menu Screen"""
 
-    def __init__(self, main_screen):
+    def __init__(self, main_screen, music_player):
         """Construtor"""
         super().__init__(main_screen)
+        self.music_player = music_player
         self.buttons: list[Button] = []
         self.start_button_txt = "Start Game"
         self.font = self.font = pygame.font.Font(
             'fonts/DepartureMonoNerdFont-Regular.otf', 22)
+        
+    def get_music_button_label(self):
+        if self.music_player.now_playing is True:
+            return ("Stop Music",self.music_player.stop_music)
+        else:
+            return ("Play Music", self.music_player.play_music)
 
     def on_event(self, event):
         for button in self.buttons:
@@ -91,8 +99,12 @@ class MenuScreen(Screen):
                               2, 200, 60, self.font, lambda: callback("play") if callback else lambda: "play")
         about_button = Button("About Game", self.main_screen.get_width() // 2 -
                               100, self.main_screen.get_height() // 2 - 100, 200, 60, self.font, lambda: callback("about") if callback else lambda: "about")
+        
+        stop_music = Button(self.get_music_button_label()[0], self.main_screen.get_width()//2 - 100, self.main_screen.get_height() //
+                              2 - 200, 200, 60, self.font, self.get_music_button_label()[1])
         self.buttons.append(about_button)
         self.buttons.append(start_button)
+        self.buttons.append(stop_music)
         for button in self.buttons:
             button.draw(self.main_screen)
         # self.all_sprites.draw(self.screen)
@@ -102,21 +114,25 @@ class MenuScreen(Screen):
 class GameScreen(Screen):
     """Screen for game"""
 
-    def __init__(self, main_screen):
+    def __init__(self, main_screen, music_player ):
         super().__init__(main_screen)
         self.buttons = []
+        self.music_player = music_player
         self.player = Player()
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.callback = None
         self.game_play = GamePlay(
             self.player, self.platforms, self.all_sprites, self.callback)
-        self.game_play.game_start_setup()
+        self.game_play.game_start_setup(self.music_player)
         
         # self.right_after_game_start()
 
     def on_event(self, event):
-        return super().on_event(event)
+        # return super().on_event(event)
+        if event.key == 32:
+            self.game_play.fire_bullets()
+        
 
     def on_loop(self):
         self.game_play.during_loop()
@@ -135,6 +151,8 @@ class GameScreen(Screen):
         text_rect.center = (WIDTH//2, HEIGHT//6)
         self.main_screen.blit(text_surf, text_rect)
         self.all_sprites.draw(self.main_screen)
+        if self.game_play.enemy:
+            self.game_play.enemy.draw(self.main_screen)
         pygame.display.flip()
 
 
@@ -156,6 +174,7 @@ class GameOverScreen(Screen):
 
     @staticmethod
     def exit_game():
+        #pylint: disable=no-member
         pygame.quit()
         sys.exit()
 
