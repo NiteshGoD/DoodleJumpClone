@@ -96,6 +96,7 @@ class GamePlay():
                     bullet.kill()
         self.all_sprites.update()
         self.enemies.update()
+        self.player.update()
 
     def scale_on_the_right(self):
         # scale = Ruler(WIDTH-20,HEIGHT)
