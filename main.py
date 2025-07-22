@@ -13,7 +13,9 @@ class DoodleJumpGame():
         pygame.init()
         self.running = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("TESTING SCREEN")
+        pygame.display.set_caption("To the Heavens")
+        icon_img = pygame.image.load("assests/images/icon/game_icon.png")
+        pygame.display.set_icon(icon_img)
         self.clock = pygame.time.Clock()
         self.music_player = MusicPlayer()
         # self.music_player.load_music("Music/perplextion.mp3")

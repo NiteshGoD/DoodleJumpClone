@@ -1,6 +1,7 @@
 """Screens"""
 import pygame
 import sys
+# import textwrap
 
 from Utilities import get_game_font
 from Configurations import GRAY, WIDTH, HEIGHT, SKY_BLUE, JUMP_STRENGTH
@@ -9,6 +10,20 @@ from Components import Button
 from Sprites import Player
 from GameLogic import GamePlay
 # from Service import MusicPlayer
+
+#ABOUT_DESC = "This is a Work in progress\n CONTROLS:\n To move left ----> Left key\n To move right ----> Right key\n To Shoot ----> Space Bar\n To pause ----> Esc Key"
+ABOUT_DESC = """
+My first game using python and pygame.
+        'A work in progress'
+----------------------------------------
+CONTROLS:
+    1. To move Left ----> Left Key
+    2. To move right ----> Right Key
+    3. To Shoot ----> SpaceBar Key
+    4. To pause game ----> Esc Key
+    5. Go back to main menu ----> ESC key
+-----------------------------------------
+"""
 
 
 class Screen():
@@ -20,6 +35,8 @@ class Screen():
         self.heading_font = get_game_font(size=22)
         self.description_font = get_game_font(size=12)
         self.buttons = []
+        self.is_game_pause = False
+
 
     def on_event(self, event):
         # pylint: disable=no-member
@@ -43,6 +60,23 @@ class AboutScreen(Screen):
 
     def on_event(self, event):
         return super().on_event(event)
+    
+    def write_desc(self, screen):
+        y = 200
+        # wrapped_text = textwrap.wrap(ABOUT_DESC, width=WIDTH//3)
+        # lines = []
+        lines = ABOUT_DESC.splitlines()
+        # for line in wrapped_text:
+        #     text_surface = self.description_font.render(line, True, (0, 0, 0),GRAY)  # black text
+        #     # text_rect = text_surface.get_rect()
+        #     # text_rect.center = (WIDTH//2 - 6, HEIGHT//3)
+        #     screen.blit(text_surface, (0, y))
+        #     y += self.description_font.get_height() + 5
+        # pygame.display.flip()
+        for i, line in enumerate(lines):
+            text = self.description_font.render(line, True,(0,0,0), GRAY)
+            screen.blit(text, (50, 130+ i * 20))
+
 
     def render(self, callback=None):
         """Renders the about page on the screen"""
@@ -51,16 +85,17 @@ class AboutScreen(Screen):
             self.heading_font, "About Game", (0, 0, 0), -5, 3)
         text_rect = text_surf.get_rect()
         text_rect.center = (WIDTH//2, HEIGHT//6)
-        text_2 = self.description_font.render(
-            f"{self.msg}", True, (0, 0, 0), GRAY)
-        text_2_rect = text_2.get_rect()
-        text_2_rect.center = (WIDTH//2 - 6, HEIGHT//3)
+        # text_2 = self.description_font.render(
+        #     f"{self.msg}", True, (0, 0, 0), GRAY)
+        # text_2_rect = text_2.get_rect()
+        # text_2_rect.center = (WIDTH//2 - 6, HEIGHT//3)
+        self.write_desc(self.main_screen)
         text_3 = self.description_font.render(
             "Author: Nitesh Ranjitkar", True, (0, 0, 0), GRAY)
         text_3_rect = text_3.get_rect()
         text_3_rect.center = (WIDTH // 2 - 11, 9 / 10 * HEIGHT)
         self.main_screen.blit(text_surf, text_rect)
-        self.main_screen.blit(text_2, text_2_rect)
+        # self.main_screen.blit(text_2, text_2_rect)
         self.main_screen.blit(text_3, text_3_rect)
         pygame.display.flip()
 
@@ -95,6 +130,8 @@ class MenuScreen(Screen):
         text_rect = text_surf.get_rect()
         text_rect.center = (WIDTH//2, HEIGHT//6)
         self.main_screen.blit(text_surf, text_rect)
+        if self.is_game_pause:
+            self.start_button_txt = "Resume"
         start_button = Button(self.start_button_txt, self.main_screen.get_width()//2 - 100, self.main_screen.get_height() //
                               2, 200, 60, self.font, lambda: callback("play") if callback else lambda: "play")
         about_button = Button("About Game", self.main_screen.get_width() // 2 -

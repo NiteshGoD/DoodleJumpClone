@@ -52,9 +52,11 @@ class ScreenManager():
     def __set_current_screen(self):
         if self.current_state == "pause":
             self.current_screen = self.menu_screen
+            self.current_screen.is_game_pause = True
             self.buttons = self.current_screen.buttons
         elif self.current_state == "play":
             self.current_screen = self.game_screen
+            self.current_screen.is_game_pause = False
             self.buttons = self.current_screen.buttons
         elif self.current_state == "game_over":
             self.current_screen = self.game_over_screen
