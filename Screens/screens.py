@@ -155,7 +155,7 @@ class GameScreen(Screen):
         super().__init__(main_screen)
         self.buttons = []
         self.music_player = music_player
-        self.player = Player()
+        self.player = Player(self.music_player)
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()
         self.callback = None
@@ -169,6 +169,7 @@ class GameScreen(Screen):
         # return super().on_event(event)
         if event.key == 32:
             self.game_play.fire_bullets()
+            self.music_player.play_shoot_sound()
         
 
     def on_loop(self):

@@ -59,6 +59,7 @@ class ScreenManager():
             self.current_screen.is_game_pause = False
             self.buttons = self.current_screen.buttons
         elif self.current_state == "game_over":
+            self.music_player.play_game_over_sound()
             self.current_screen = self.game_over_screen
             self.buttons = self.current_screen.buttons
         elif self.current_state == "about":

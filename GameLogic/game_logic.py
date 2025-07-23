@@ -1,4 +1,5 @@
 import pygame
+import math
 import random
 from typing import Callable, Optional
 from Configurations import JUMP_STRENGTH, HEIGHT, WIDTH
@@ -19,9 +20,15 @@ class GamePlay():
         self.bullets = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.enemy_spawn_interval = 0
+        self.interval = 300
 
     def did_land(self):
         pass
+
+    def change_enemy_spawn_interval(self,decrease_by):
+        self.interval = math.ceil(self.interval - ((decrease_by/100) * self.interval))
+        print(self.interval)
+
 
     def spawn_enemy(self):
         enemy = Enemy()
@@ -39,6 +46,7 @@ class GamePlay():
 
         hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
         if hits and self.player.vel_y > 0:
+            self.player.music_player.play_jump_sound()
             self.player.vel_y = JUMP_STRENGTH
         if self.player.has_player_fallen_off:
             # print("Game Over")
@@ -46,8 +54,9 @@ class GamePlay():
                 self.change_game_state("game_over")
         # spawn enemy after some time
         # if self.distance_travelled == 100:
-        if self.enemy_spawn_interval == 300:
+        if self.enemy_spawn_interval == self.interval:
             self.spawn_enemy()
+            self.change_enemy_spawn_interval(5)
             self.enemy_spawn_interval = 0
         if self.enemy and self.enemy.rect.bottom > HEIGHT:
             self.enemy.kill()
@@ -95,6 +104,7 @@ class GamePlay():
                 self.enemy, self.bullets, False)
             if target_hit:
                 self.enemy.damage()
+                self.player.music_player.play_hit_sound()
                 if self.enemy.enemy_health <= 0:
                     self.enemy.kill()
                 # self.enemy = None

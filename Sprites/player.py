@@ -31,8 +31,9 @@ class SpriteSheet:
 class Player(pygame.sprite.Sprite):
     """Player Blueprint"""
 
-    def __init__(self):
+    def __init__(self,music_player = None):
         super().__init__()
+        self.music_player = music_player
         self.spritesheet = SpriteSheet("assests/images/player/character.png")
         self.sprites = self.spritesheet.get_sprites(0, 0, 32, 32, True)
         self.bigger_sprites = {}
@@ -76,6 +77,8 @@ class Player(pygame.sprite.Sprite):
             self.jumping_status = "maximum_height"
         elif self.vel_y == JUMP_STRENGTH:
             self.jumping_status = "landed"
+            # if self.music_player:
+            
         else:
             self.jumping_status = "jumping"
         self.rect.y += self.vel_y
