@@ -31,16 +31,17 @@ class SpriteSheet:
 class Player(pygame.sprite.Sprite):
     """Player Blueprint"""
 
-    def __init__(self,music_player = None):
+    def __init__(self, music_player=None):
         super().__init__()
         self.music_player = music_player
-        self.spritesheet = SpriteSheet("assests/images/player/character.png")
+        self.spritesheet = SpriteSheet("assets/images/player/character.png")
         self.sprites = self.spritesheet.get_sprites(0, 0, 32, 32, True)
         self.bigger_sprites = {}
         for key, values in self.sprites.items():
             self.bigger_sprites[key] = []
             for value in values:
-                self.bigger_sprites[key].append(pygame.transform.scale2x(value))
+                self.bigger_sprites[key].append(
+                    pygame.transform.scale2x(value))
         # self.rect = pygame.Rect(WIDTH//2, HEIGHT-200,32,32)
         self.image = self.bigger_sprites["character_right"][0]
         original_rect = self.image.get_rect()
@@ -57,6 +58,13 @@ class Player(pygame.sprite.Sprite):
         self.has_player_fallen_off = False
         self.jumping_status = "jumping"
         self.reference = self.rect.y
+        self.player_health = 3
+
+    def damage(self):
+        if self.player_health > 0:
+            self.player_health -= 1
+            if self.player_health == 0:
+                self.has_player_fallen_off = True
 
     def change_sprite_image(self):
         if self.jumping_status == "jumping":
@@ -78,7 +86,7 @@ class Player(pygame.sprite.Sprite):
         elif self.vel_y == JUMP_STRENGTH:
             self.jumping_status = "landed"
             # if self.music_player:
-            
+
         else:
             self.jumping_status = "jumping"
         self.rect.y += self.vel_y

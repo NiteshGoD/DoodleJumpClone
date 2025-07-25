@@ -1,9 +1,21 @@
+"""Reads values for some constants for the game from 'config.ini'"""
 from configparser import ConfigParser
 import ast
 
+
+def convert_to_tuple(value_string: str):
+    """Converts the color RGB extracted from .ini file to tuple"""
+    try:
+        converted_value = ast.literal_eval(value_string)
+    except ValueError as v_e:
+        print(v_e)
+        return
+    return converted_value
+
+
 config = ConfigParser()
 config.sections()
-config.read('config.ini')
+config.read("config.ini")
 
 # print(type(ast.literal_eval(config['screen']['width'])))
 
@@ -12,13 +24,14 @@ WIDTH, HEIGHT = ast.literal_eval(config["screen"]["width"].strip(
 )), ast.literal_eval(config["screen"]["height"].strip())
 
 # Colors
-WHITE = eval(ast.literal_eval(config["color"]["white"].strip()))
-GREEN = eval(ast.literal_eval(config["color"]["green"].strip()))
-BLUE = eval(ast.literal_eval(config["color"]["blue"].strip()))
-SKY_BLUE = eval(ast.literal_eval(config["color"]["sky_blue"]))
-DARK_GRAY = eval(ast.literal_eval(config["color"]["dark_gray"]))
-GRAY = eval(ast.literal_eval(config["color"]["gray"]))
-DARK_PURPLE = eval(ast.literal_eval(config["color"]["dark_purple"]))
+WHITE = convert_to_tuple(ast.literal_eval(config["color"]["white"].strip()))
+GREEN = convert_to_tuple(ast.literal_eval(config["color"]["green"].strip()))
+BLUE = convert_to_tuple(ast.literal_eval(config["color"]["blue"].strip()))
+SKY_BLUE = convert_to_tuple(ast.literal_eval(config["color"]["sky_blue"]))
+DARK_GRAY = convert_to_tuple(ast.literal_eval(config["color"]["dark_gray"]))
+GRAY = convert_to_tuple(ast.literal_eval(config["color"]["gray"]))
+DARK_PURPLE = convert_to_tuple(
+    ast.literal_eval(config["color"]["dark_purple"]))
 
 FPS = ast.literal_eval(config["constants"]["fps"].strip())
 GRAVITY = ast.literal_eval(config["constants"]["gravity"].strip())

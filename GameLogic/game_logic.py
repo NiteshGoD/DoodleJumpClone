@@ -1,13 +1,18 @@
-import pygame
+"""Game Play Logic"""
 import math
 import random
 from typing import Callable, Optional
+import pygame
 from Configurations import JUMP_STRENGTH, HEIGHT, WIDTH
-from Sprites import Player, Platform, Ruler, Enemy, Bullets
+from Sprites import Player,Platform, Ruler, Enemy, Bullets
 
 
 class GamePlay():
-    def __init__(self, player, platforms, all_sprites: pygame.sprite.Group, change_game_state: Optional[Callable] = None):
+    """Main Gameplay"""
+
+    def __init__(self, player , platforms,
+                 all_sprites: pygame.sprite.Group,
+                 change_game_state: Optional[Callable] = None):
         self.player = player
         self.platforms = platforms
         self.all_sprites = all_sprites
@@ -23,27 +28,33 @@ class GamePlay():
         self.interval = 300
 
     def did_land(self):
-        pass
+        """when player lands on the platform"""
+        raise NotImplementedError
 
-    def change_enemy_spawn_interval(self,decrease_by):
-        self.interval = math.ceil(self.interval - ((decrease_by/100) * self.interval))
+    def change_enemy_spawn_interval(self, decrease_by):
+        """Enemy must spawn after less"""
+        if self.interval >=95 :
+            self.interval = math.ceil(
+                self.interval - ((decrease_by/100) * self.interval))
         print(self.interval)
 
-
     def spawn_enemy(self):
+        """Creates new enemy"""
         enemy = Enemy()
         self.enemy = enemy
+        self.all_sprites.add(enemy)
         self.enemies.add(self.enemy)
         # self.all_sprites.add(self.enemy)
 
     def fire_bullets(self):
+        """Creates new bullets"""
         bullet = Bullets(self.player.rect.center)
         self.all_sprites.add(bullet)
         self.bullets.add(bullet)
         # print("Bullet should be fired now")
 
     def during_loop(self):
-
+        """This block runs in every frame"""
         hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
         if hits and self.player.vel_y > 0:
             self.player.music_player.play_jump_sound()
@@ -87,7 +98,8 @@ class GamePlay():
                 self.player, self.enemies, False)
             if enemy_player_collision:
                 print("Player touched the enemy")
-                self.player.has_player_fallen_off = True
+                # self.player.has_player_fallen_off =
+                self.player.damage()
             self.enemy.rect.y += abs(self.player.vel_y)
             for enemies in self.enemies:
                 if enemies.rect.bottom > HEIGHT:
@@ -123,6 +135,7 @@ class GamePlay():
         self.player.update()
 
     def scale_on_the_right(self):
+        """scaling"""
         # scale = Ruler(WIDTH-20,HEIGHT)
         for unit in range(1, HEIGHT, 50):
             # self.distance_travelled += 1

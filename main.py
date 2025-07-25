@@ -14,11 +14,10 @@ class DoodleJumpGame():
         self.running = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("To the Heavens")
-        icon_img = pygame.image.load("assests/images/icon/game_icon.png")
+        icon_img = pygame.image.load("assets/images/icon/game_icon.png")
         pygame.display.set_icon(icon_img)
         self.clock = pygame.time.Clock()
         self.music_player = MusicPlayer()
-        # self.music_player.load_music("Music/perplextion.mp3")
         self.screen_manager = ScreenManager(self.screen, self.music_player)
 
     def on_event(self, event):
