@@ -4,23 +4,25 @@ import random
 from typing import Callable, Optional
 import pygame
 from Configurations import JUMP_STRENGTH, HEIGHT, WIDTH
-from Sprites import Player,Platform, Ruler, Enemy, Bullets
+from Sprites import Platform, Ruler, Enemy, Bullets
 
 
 class GamePlay():
     """Main Gameplay"""
 
-    def __init__(self, player , platforms,
+    def __init__(self, player, platforms,
+                 score_handler,
                  all_sprites: pygame.sprite.Group,
                  change_game_state: Optional[Callable] = None):
         self.player = player
         self.platforms = platforms
         self.all_sprites = all_sprites
+        self.score_handler = score_handler
         self.change_game_state = change_game_state
         self.player.has_player_fallen_off = False
         self.ruler = pygame.sprite.Group()
         self.distance_travelled = 0
-        self.score = None
+        self.score = 0
         self.enemy = None
         self.bullets = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
@@ -33,7 +35,7 @@ class GamePlay():
 
     def change_enemy_spawn_interval(self, decrease_by):
         """Enemy must spawn after less"""
-        if self.interval >=95 :
+        if self.interval >= 95:
             self.interval = math.ceil(
                 self.interval - ((decrease_by/100) * self.interval))
         print(self.interval)
@@ -53,6 +55,11 @@ class GamePlay():
         self.bullets.add(bullet)
         # print("Bullet should be fired now")
 
+    def game_over_setup(self, music_player = None):
+        self.score_handler.reset_kills()
+        if music_player:
+            music_player.stop_music()
+
     def during_loop(self):
         """This block runs in every frame"""
         hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
@@ -63,6 +70,7 @@ class GamePlay():
             # print("Game Over")
             if self.change_game_state:
                 self.change_game_state("game_over")
+                # self.game_over_setup()
         # spawn enemy after some time
         # if self.distance_travelled == 100:
         if self.enemy_spawn_interval == self.interval:
@@ -118,6 +126,7 @@ class GamePlay():
                 self.enemy.damage()
                 self.player.music_player.play_hit_sound()
                 if self.enemy.enemy_health <= 0:
+                    self.score_handler.update_kills()
                     self.enemy.kill()
                 # self.enemy = None
                     print("Enemy killed")
@@ -133,23 +142,25 @@ class GamePlay():
         self.all_sprites.update()
         self.enemies.update()
         self.player.update()
+        self.score_handler.update_score(self.distance_travelled)
+        self.score_handler.update_high_kills()
 
-    def scale_on_the_right(self):
-        """scaling"""
-        # scale = Ruler(WIDTH-20,HEIGHT)
-        for unit in range(1, HEIGHT, 50):
-            # self.distance_travelled += 1
-            scale = Ruler(WIDTH-20, unit, str((HEIGHT-unit)))
-            # scale = Ruler(WIDTH-20, unit, str(HEIGHT- self.distance_travelled))
-            self.all_sprites.add(scale)
-            self.ruler.add(scale)
+    # def scale_on_the_right(self):
+    #     """scaling"""
+    #     # scale = Ruler(WIDTH-20,HEIGHT)
+    #     for unit in range(1, HEIGHT, 50):
+    #         # self.distance_travelled += 1
+    #         scale = Ruler(WIDTH-20, unit, str((HEIGHT-unit)))
+    #         # scale = Ruler(WIDTH-20, unit, str(HEIGHT- self.distance_travelled))
+    #         self.all_sprites.add(scale)
+    #         self.ruler.add(scale)
 
     def game_start_setup(self, music_player):
         """setting up sprites when game starts"""
         music_choices = ["Music/perplextion.mp3", "Music/gothic_fantasy.mp3"]
         music_player.load_music(random.choice(music_choices))
-        music_player.play_music()
-        self.scale_on_the_right()
+        # music_player.play_music()
+        # self.scale_on_the_right()
         self.all_sprites.add(self.player)
         # Create initial platforms
         initial_plat = Platform(WIDTH//2, HEIGHT - 10)

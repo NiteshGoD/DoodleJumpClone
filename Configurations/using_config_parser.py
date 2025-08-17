@@ -10,7 +10,7 @@ def convert_to_tuple(value_string: str):
     except ValueError as v_e:
         print(v_e)
         return
-    return converted_value
+    return tuple(converted_value)
 
 
 config = ConfigParser()
@@ -32,6 +32,9 @@ DARK_GRAY = convert_to_tuple(ast.literal_eval(config["color"]["dark_gray"]))
 GRAY = convert_to_tuple(ast.literal_eval(config["color"]["gray"]))
 DARK_PURPLE = convert_to_tuple(
     ast.literal_eval(config["color"]["dark_purple"]))
+RAINY_COLOR = convert_to_tuple(
+    ast.literal_eval(config["color"]["rainy_color"])
+)
 
 FPS = ast.literal_eval(config["constants"]["fps"].strip())
 GRAVITY = ast.literal_eval(config["constants"]["gravity"].strip())
