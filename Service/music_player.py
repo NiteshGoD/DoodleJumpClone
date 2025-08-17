@@ -3,16 +3,19 @@ import pygame
 
 
 class MusicPlayer():
+    """Handles and Provides Music and Sound playing functionality"""
+
     def __init__(self):
         pygame.mixer.init()
         self.now_playing = False
         self.is_music_loaded = False
-        self.jump_sound = pygame.mixer.Sound("assests/sound/jump_new_1.wav")
+        self.jump_sound = pygame.mixer.Sound("assets/sound/jump_new_1.wav")
         self.game_over_sound = pygame.mixer.Sound(
-            "assests/sound/game_over.wav")
-        self.shoot_sound = pygame.mixer.Sound("assests/sound/shoot.wav")
-        self.hit_sound = pygame.mixer.Sound("assests/sound/hit.wav")
-        self.checkpoint_sound = pygame.mixer.Sound("assests/sound/checkpoint.wav")
+            "assets/sound/game_over.wav")
+        self.shoot_sound = pygame.mixer.Sound("assets/sound/shoot.wav")
+        self.hit_sound = pygame.mixer.Sound("assets/sound/hit.wav")
+        self.checkpoint_sound = pygame.mixer.Sound(
+            "assets/sound/checkpoint.wav")
         self.game_over_sound.set_volume(0.5)
         self.jump_sound.set_volume(0.5)
         self.shoot_sound.set_volume(0.3)
@@ -48,10 +51,13 @@ class MusicPlayer():
         pygame.mixer.Sound.play(self.game_over_sound)
 
     def play_shoot_sound(self):
+        """Plays sound to shoot"""
         pygame.mixer.Sound.play(self.shoot_sound)
 
     def play_hit_sound(self):
+        """When hit something"""
         pygame.mixer.Sound.play(self.hit_sound)
 
     def control_volume(self, volumen_param):
-        pass
+        """To Control Volume for sound management"""
+        raise NotADirectoryError

@@ -1,7 +1,7 @@
 """Main Game Entry point"""
 import pygame
 from Configurations import WIDTH, HEIGHT, FPS
-from Service import ScreenManager, MusicPlayer
+from Service import ScreenManager, MusicPlayer, ScoreManager
 
 
 class DoodleJumpGame():
@@ -14,12 +14,13 @@ class DoodleJumpGame():
         self.running = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("To the Heavens")
-        icon_img = pygame.image.load("assests/images/icon/game_icon.png")
+        icon_img = pygame.image.load("assets/images/icon/game_icon.png")
         pygame.display.set_icon(icon_img)
         self.clock = pygame.time.Clock()
         self.music_player = MusicPlayer()
-        # self.music_player.load_music("Music/perplextion.mp3")
-        self.screen_manager = ScreenManager(self.screen, self.music_player)
+        self.score_handler = ScoreManager()
+        self.screen_manager = ScreenManager(
+            self.screen, self.music_player, self.score_handler)
 
     def on_event(self, event):
         """checks the events here"""
@@ -40,10 +41,13 @@ class DoodleJumpGame():
     def on_cleanup(self):
         """After the main game loop is finished execute this"""
         # pylint: disable=no-member
+        self.score_handler.save_high_score(self.score_handler.score_file_name)
         pygame.quit()
 
     def start(self):
         """Main game loop"""
+        print(self.score_handler.get_high_score(
+            self.score_handler.score_file_name))
         while self.running:
             self.clock.tick(FPS)
             for event in pygame.event.get():
