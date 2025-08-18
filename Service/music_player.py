@@ -1,5 +1,8 @@
 """Handles music play and pause and sound control"""
+import os
+import random
 import pygame
+from Utilities import resource_pathway
 
 
 class MusicPlayer():
@@ -9,13 +12,17 @@ class MusicPlayer():
         pygame.mixer.init()
         self.now_playing = False
         self.is_music_loaded = False
-        self.jump_sound = pygame.mixer.Sound("assets/sound/jump_new_1.wav")
+        self.jump_sound = pygame.mixer.Sound(
+            resource_pathway("assets/sound/jump_new_1.wav"))
         self.game_over_sound = pygame.mixer.Sound(
-            "assets/sound/game_over.wav")
-        self.shoot_sound = pygame.mixer.Sound("assets/sound/shoot.wav")
-        self.hit_sound = pygame.mixer.Sound("assets/sound/hit.wav")
+            resource_pathway("assets/sound/game_over.wav"))
+        self.shoot_sound = pygame.mixer.Sound(
+            resource_pathway("assets/sound/shoot.wav"))
+        self.hit_sound = pygame.mixer.Sound(
+            resource_pathway("assets/sound/hit.wav"))
         self.checkpoint_sound = pygame.mixer.Sound(
-            "assets/sound/checkpoint.wav")
+            resource_pathway(
+                "assets/sound/checkpoint.wav"))
         self.game_over_sound.set_volume(0.5)
         self.jump_sound.set_volume(0.5)
         self.shoot_sound.set_volume(0.3)
@@ -36,6 +43,7 @@ class MusicPlayer():
         """Stop the music"""
         pygame.mixer.music.stop()
         self.now_playing = False
+        # self.unload_music()
 
     def unload_music(self):
         """Unloads the music"""
@@ -60,4 +68,17 @@ class MusicPlayer():
 
     def control_volume(self, volumen_param):
         """To Control Volume for sound management"""
-        raise NotADirectoryError
+        raise NotImplementedError
+    
+    def get_songs_in_music_folder(self):
+        music_path = resource_pathway("assets/music")
+        songs = os.listdir(music_path)
+        song_list = []
+        for song in songs:
+            song_path = os.path.join("assets/music",song)
+            song_list.append(song_path)
+        return song_list
+    
+    def ready_music(self):
+        self.load_music(resource_pathway(random.choice(self.get_songs_in_music_folder())))
+

@@ -1,6 +1,7 @@
 """Player Definition"""
 import pygame
 from Configurations import WIDTH, HEIGHT, BLUE, GRAVITY, JUMP_STRENGTH
+from Utilities import resource_pathway
 
 
 def flip(sprites):
@@ -34,7 +35,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, music_player=None):
         super().__init__()
         self.music_player = music_player
-        self.spritesheet = SpriteSheet("assets/images/player/character.png")
+        self.spritesheet = SpriteSheet(resource_pathway("assets/images/player/character.png"))
         self.sprites = self.spritesheet.get_sprites(0, 0, 32, 32, True)
         self.bigger_sprites = {}
         for key, values in self.sprites.items():

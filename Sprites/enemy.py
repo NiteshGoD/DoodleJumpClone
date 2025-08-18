@@ -2,6 +2,7 @@
 import random
 import pygame
 from Configurations import WIDTH, HEIGHT
+from Utilities import resource_pathway
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -10,7 +11,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         # self.image = pygame.Surface((32, 32))
-        self.image = pygame.image.load("assets/images/player/player.png").convert_alpha()
+        self.image = pygame.image.load(resource_pathway("assets/images/player/player.png")).convert_alpha()
         # self.image.fill(BLUE)
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(10,WIDTH -32), 0)

@@ -55,7 +55,7 @@ class GamePlay():
         self.bullets.add(bullet)
         # print("Bullet should be fired now")
 
-    def game_over_setup(self, music_player = None):
+    def game_over_setup(self, music_player=None):
         self.score_handler.reset_kills()
         if music_player:
             music_player.stop_music()
@@ -157,9 +157,7 @@ class GamePlay():
 
     def game_start_setup(self, music_player):
         """setting up sprites when game starts"""
-        music_choices = ["Music/perplextion.mp3", "Music/gothic_fantasy.mp3"]
-        music_player.load_music(random.choice(music_choices))
-        # music_player.play_music()
+        music_player.ready_music()
         # self.scale_on_the_right()
         self.all_sprites.add(self.player)
         # Create initial platforms

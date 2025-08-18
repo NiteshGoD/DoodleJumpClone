@@ -2,6 +2,7 @@
 import pygame
 from Configurations import WIDTH, HEIGHT, FPS
 from Service import ScreenManager, MusicPlayer, ScoreManager
+from Utilities import resource_pathway
 
 
 class DoodleJumpGame():
@@ -14,7 +15,7 @@ class DoodleJumpGame():
         self.running = True
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("To the Heavens")
-        icon_img = pygame.image.load("assets/images/icon/game_icon.png")
+        icon_img = pygame.image.load(resource_pathway("assets/images/icon/game_icon.png"))
         pygame.display.set_icon(icon_img)
         self.clock = pygame.time.Clock()
         self.music_player = MusicPlayer()
