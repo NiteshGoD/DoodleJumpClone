@@ -117,8 +117,9 @@ class MenuScreen(Screen):
         self.music_player = music_player
         self.buttons: list[Button] = []
         self.start_button_txt = "Start Game"
-        self.font = self.font = pygame.font.Font(
-            'fonts/DepartureMonoNerdFont-Regular.otf', 22)
+        # self.font = self.font = pygame.font.Font(
+        #     'fonts/DepartureMonoNerdFont-Regular.otf', 22)
+        self.font = get_game_font(size=22)
 
     def get_music_button_label(self):
         """To change the music label on the button, either play or stop"""

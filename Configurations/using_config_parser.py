@@ -1,6 +1,7 @@
 """Reads values for some constants for the game from 'config.ini'"""
 from configparser import ConfigParser
 import ast
+from Utilities import resource_pathway
 
 
 def convert_to_tuple(value_string: str):
@@ -15,7 +16,7 @@ def convert_to_tuple(value_string: str):
 
 config = ConfigParser()
 config.sections()
-config.read("config.ini")
+config.read(resource_pathway("Configurations/config.ini"))
 
 # print(type(ast.literal_eval(config['screen']['width'])))
 

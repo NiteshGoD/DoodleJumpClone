@@ -1,7 +1,8 @@
 import tomllib
 import ast
+from Utilities import resource_pathway
 
-with open("config.toml","rb") as f:
+with open(resource_pathway("Configurations/config.toml"),"rb") as f:
     DATA = tomllib.load(f)
 
 #SCREEN
